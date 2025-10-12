@@ -1,0 +1,95 @@
+{
+  // "typescript.experimental.useTsgo": true,
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  // Auto fix
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "eslint.rules.customizations": [
+    {
+      "rule": "style/*",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "format/*",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-indent",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-spacing",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-spaces",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-order",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-dangle",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-newline",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*quotes",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*semi",
+      "severity": "off",
+      "fixable": true
+    }
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "xml",
+    "gql",
+    "graphql",
+    "astro",
+    "svelte",
+    "css",
+    "less",
+    "scss",
+    "pcss",
+    "postcss"
+  ],
+  "oxc.enable": true,
+  "css.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "vue.editor.focusMode": false,
+  "iconify.inplace": false,
+  "oxc.flags": {
+    "--fix-dangerously": true
+  }
+}

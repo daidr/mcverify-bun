@@ -1,0 +1,125 @@
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>MC Verify | 这是什么？ | 戴兜的小屋</title>
+  <link rel='stylesheet' href='/public/style/global.css' />
+  <link rel='stylesheet' href='/public/style/page.css' />
+  <link rel='stylesheet' href='/public/fonts/londrinasolid/font.css' />
+  <link rel='stylesheet' href='/public/fonts/concertone/font.css' />
+  <link rel='icon' href='/public/images/icon256.png' sizes='256x256' type='image/png' />
+  <link rel='shortcut icon' href='/public/favicon.ico' type='image/x-icon' />
+</head>
+
+<body>
+  <a href='/'>
+    <div class='logo-wrapper'>
+      <img src='/public/images/icon256.png' alt='verify-logo' class='logo' />
+      <p class='title'>MC Verify</p>
+    </div>
+  </a>
+  <main>
+    <h1>这是什么？</h1>
+    <article>
+      <section class='summary'>
+        <h2>简要介绍</h2>
+        <p style='text-indent: 2em;'>MC Verify 是由<b><a href='https://im.daidr.me' target='_blank'
+              rel='noopener noreferrer'>戴兜</a></b>开发的MC服务器白名单分配系统，用于检查正版UUID对应玩家是否为杭电学生。</p>
+        <p style='text-indent: 2em;'>在 MC Verify
+          完成账号验证后，您能够进入一些需要杭电学生身份的MC服务器。同时，MC
+          Verify提供了验证接口，你可以使用验证接口来实现白名单功能。</p>
+        <p style='text-indent: 2em;'>MC Verify 仅提供验证接口，不提供用于实现具体功能的模组、Bukkit插件。服务器侧的玩家逻辑需要您自行完成。</p>
+      </section>
+      <section>
+        <h3>接口说明</h3>
+        <p>Endpoint: <code>https://mcverify.daidr.me</code></p>
+        <h3>UUID 验证接口</h3>
+        <h4>路由</h4>
+        <p>
+          <code>GET /api/get/mojang/[uuid]</code>
+        </p>
+        <h4>描述</h4>
+        <p>
+          查询输入的 UUID 是否完成了账号绑定
+        </p>
+        <h4>参数</h4>
+        <div class='table'>
+          <table>
+            <tr>
+              <th class='center'>参数</th>
+              <th style='min-width: 10rem;'>描述</th>
+            </tr>
+            <tr>
+              <td class='center'>uuid</td>
+              <td>需要查询的 UUID（32位或36位均可）</td>
+            </tr>
+          </table>
+        </div>
+        <h4>响应类型</h4>
+        <p><code>application/json</code></p>
+        <h4>响应字段</h4>
+        <div class='table'>
+          <table>
+            <tr>
+              <th class='center'>字段名</th>
+              <th class='center'>类型</th>
+              <th class='center'>取值</th>
+              <th style='min-width: 10rem;'>描述</th>
+            </tr>
+            <tr>
+              <td rowspan='2' class='center'>code</td>
+              <td rowspan='2' class='center'>number</td>
+              <td class='center'><code>0</code></td>
+              <td>成功</td>
+            </tr>
+            <tr>
+              <td class='center'><code>-1</code></td>
+              <td>提供的UUID无效</td>
+            </tr>
+            <tr>
+              <td class='center'>msg</td>
+              <td class='center'>string</td>
+              <td class='center'><code>ok</code></td>
+              <td>正常情况下为 <code>ok</code>，否则为异常情况的补充说明</td>
+            </tr>
+            <tr>
+              <td rowspan='2' class='center'>data.bound</td>
+              <td rowspan='2' class='center'>bool</td>
+              <td class='center'><code>true</code></td>
+              <td>已绑定</td>
+            </tr>
+            <tr>
+              <td class='center'><code>false</code></td>
+              <td>未绑定</td>
+            </tr>
+          </table>
+        </div>
+        <h4>示例</h4>
+        <h5>请求示例</h5>
+        <pre><code
+            >https://mcverify.daidr.me/api/get/mojang/f1fd12b1c0d84286b080910484b7f9f6</code></pre>
+        <h5>返回示例</h5>
+        <pre><code>{"code":0,"msg":"ok","data":{"bound":true}}</code></pre>
+
+      </section>
+    </article>
+  </main>
+
+  {{! Footer }}
+  <footer>
+    <div class='copyright'>Coded by
+      <a href='http://im.daidr.me' target='_blank' rel='noopener noreferrer' class='animate-link'>daidr</a>
+      with ❤️
+    </div>
+    <div>@
+      {{CURRENT_YEAR}}
+      ·
+      <a href='/privacy' class='animate-link'>隐私政策</a>
+      ·
+      <a href='/whatis' class='animate-link'>这是什么?</a>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "fake-verify-server",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "keywords": [],
+  "exports": {
+    "bun": "./index.ts",
+    "import": "./index.ts"
+  },
+  "dependencies": {
+    "minecraft-data": "3.99.1",
+    "minecraft-protocol": "1.62.0"
+  }
+}

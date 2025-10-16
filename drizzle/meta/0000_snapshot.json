@@ -1,0 +1,85 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "9468d6b6-d6f7-438d-a8e0-afe1c9e3a701",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "users": {
+      "name": "users",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "hduhelp_id": {
+          "name": "hduhelp_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "uuid_mojang": {
+          "name": "uuid_mojang",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "users_id_unique": {
+          "name": "users_id_unique",
+          "columns": [
+            "id"
+          ],
+          "isUnique": true
+        },
+        "users_hduhelpId_unique": {
+          "name": "users_hduhelpId_unique",
+          "columns": [
+            "hduhelp_id"
+          ],
+          "isUnique": true
+        },
+        "users_uuidMojang_unique": {
+          "name": "users_uuidMojang_unique",
+          "columns": [
+            "uuid_mojang"
+          ],
+          "isUnique": true
+        },
+        "hduhelp_id_idx": {
+          "name": "hduhelp_id_idx",
+          "columns": [
+            "hduhelp_id"
+          ],
+          "isUnique": true
+        },
+        "uuid_mojang_idx": {
+          "name": "uuid_mojang_idx",
+          "columns": [
+            "uuid_mojang"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}

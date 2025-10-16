@@ -1,0 +1,88 @@
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>MC Verify | 隐私政策 | 戴兜的小屋</title>
+  <link rel='stylesheet' href='/public/style/global.css' />
+  <link rel='stylesheet' href='/public/style/page.css' />
+  <link rel='stylesheet' href='/public/fonts/londrinasolid/font.css' />
+  <link rel='stylesheet' href='/public/fonts/concertone/font.css' />
+  <link rel='icon' href='/public/images/icon256.png' sizes='256x256' type='image/png' />
+  <link rel='shortcut icon' href='/public/favicon.ico' type='image/x-icon' />
+</head>
+
+<body>
+  <a href='/'>
+    <div class='logo-wrapper'>
+      <img src='/public/images/icon256.png' alt='verify-logo' class='logo' />
+      <p class='title'>MC Verify</p>
+    </div>
+  </a>
+  <main>
+    <h1>MC Verify 隐私政策</h1>
+    <article>
+      <section class='summary'>
+        <h2>关于本服务</h2>
+        <ol>
+          <li><b>MC Verify</b>
+            是由<b><a href='https://im.daidr.me' target='_blank'
+                rel='noopener noreferrer'>戴兜</a></b>开发的MC服务器白名单分配系统，用于检查正版UUID对应玩家是否为杭电学生。</li>
+          <li><b>MC Verify</b>
+            仅使用了<b>杭电助手</b>提供的OAuth2认证服务，与<b>杭电助手社团</b>并无直接联系。</li>
+          <li>您在使用过程中遇到的任何问题，均可使用邮箱
+            <b><a class='lazy-email' href='' target='_blank'>loading...</a></b>
+            与戴兜取得联系。
+          </li>
+          <script>
+            const email = "aUBkYWlkci5tZQ=="; setTimeout(() => {
+              document.querySelectorAll(".lazy-email").forEach((e) => {
+                e.href =
+                "mailto:" + atob(email); e.innerText = atob(email);
+              })
+            }, 1000)
+          </script>
+        </ol>
+      </section>
+      <section>
+        <h2>数据存储</h2>
+        <ol>
+          <li><b>MC Verify</b>
+            不储存<b>任何</b>与您个人隐私直接相关的信息，包括但不仅限于<b>IP地址</b>、<b>姓名学号</b>、<b>联系方式</b></li>
+          <li><b>MC Verify</b>
+            会储存<b>正版Minecraft UUID</b>和<b>杭电助手账号</b>的绑定关系</li>
+          <li><b>MC Verify</b>
+            提供了账号解绑功能，登录后点击首页右上角的「解绑」按钮即可解除绑定。在完成解绑后，除目前登录状态以外的所有信息均会从数据库中移除。</li>
+        </ol>
+      </section>
+      <section>
+        <h2>服务提供</h2>
+        <ol>
+          <li><b>MC Verify</b>
+            向所有人开放了查询API接口，可以点击页面底部「这是什么？」了解具体信息。</li>
+          <li><b>MC Verify</b>
+            仅能够查询指定<b>正版Minecraft UUID</b>是否已经完成了绑定，无法通过UUID查询具体个人，当然也无法通过具体个人反查UUID。</li>
+          <li>目前 <b>MC Verify</b> 仅支持<b>正版Minecraft</b>绑定，您无法通过第三方 Yggdrasil 认证服务完成绑定流程。如果有必要，之后也会完善相关功能，允许一些可靠的第三方
+            Yggdrasil 认证服务。</li>
+        </ol>
+      </section>
+    </article>
+  </main>
+
+  {{! Footer }}
+  <footer>
+    <div class='copyright'>Coded by
+      <a href='http://im.daidr.me' target='_blank' rel='noopener noreferrer' class='animate-link'>daidr</a>
+      with ❤️
+    </div>
+    <div>@
+      {{CURRENT_YEAR}}
+      ·
+      <a href='/privacy' class='animate-link'>隐私政策</a>
+      ·
+      <a href='/whatis' class='animate-link'>这是什么?</a>
+    </div>
+  </footer>
+</body>
+
+</html>

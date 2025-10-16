@@ -1,0 +1,210 @@
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.logo {
+  width: 14rem;
+  height: 14rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.title {
+  user-select: none;
+  margin: 1rem 0;
+  font-size: 3rem;
+  font-weight: bolder;
+  text-align: center;
+  font-family: "LondrinaSolid", "Arial Black", sans-serif;
+  color: transparent;
+  position: relative;
+  background: linear-gradient(120deg, var(--primary-dark), var(--primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.title::before {
+  content: "HDUer";
+  position: absolute;
+  bottom: -0.2rem;
+  left: 0.1rem;
+  letter-spacing: 0.1em;
+  color: transparent;
+  font-size: 1rem;
+  font-weight: normal;
+  opacity: 0.7;
+  background: linear-gradient(90deg, #451a0a, #9f7e72);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.login-btn {
+  margin-top: -10rem;
+  transform: translateY(10rem);
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(var(--hduhelp-primary-rgb), 0.8);
+  background-color: transparent;
+  font-size: 1.6rem;
+  font-weight: bold;
+  vertical-align: middle;
+  padding: 1rem 2rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  position: relative;
+  border: none;
+  border-radius: 1.4rem;
+}
+
+.login-btn::before {
+  border-radius: 1.4rem;
+  pointer-events: none;
+  content: "";
+  border: rgba(var(--hduhelp-primary-rgb), 0.3) 4px solid;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.login-btn:hover::before {
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border-radius: 1.8rem;
+}
+
+.login-btn:hover {
+  background: var(--hduhelp-primary);
+  color: white;
+}
+
+.login-btn svg {
+  height: 1.2em;
+  margin-right: 0.5em;
+}
+
+.prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.prompt .text {
+  font-size: 1rem;
+}
+
+.prompt .server {
+  margin-top: 1rem;
+  border: rgba(var(--primary-rgb), 0.2) 4px solid;
+  border-radius: 1.4rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.prompt small {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.user-card {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.mc-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+  font-family: Roboto, system-ui, sans-serif;
+  background: white;
+  padding: 1rem;
+  border-radius: calc(1.5rem);
+  border: var(--primary-light) 1px solid;
+  --shadow-color: 69, 176, 166;
+  box-shadow: rgba(var(--shadow-color), 0.07) 0px 1px 2px, rgba(var(--shadow-color), 0.07) 0px 2px 4px,
+    rgba(var(--shadow-color), 0.07) 0px 4px 8px, rgba(var(--shadow-color), 0.07) 0px 8px 16px,
+    rgba(var(--shadow-color), 0.07) 0px 16px 32px, rgba(var(--shadow-color), 0.07) 0px 32px 64px;
+}
+
+.mc-card .avatar {
+  width: 4.5rem;
+  height: 4.5rem;
+  flex-shrink: 0;
+  background-size: cover;
+  border-radius: 0.8rem;
+  position: relative;
+}
+
+.mc-card .avatar::before {
+  position: absolute;
+  content: "";
+  --border-width: 4px;
+  --origin-boder-radius: 0.8rem;
+  top: calc(-1 * var(--border-width));
+  left: calc(-1 * var(--border-width));
+  right: calc(-1 * var(--border-width));
+  bottom: calc(-1 * var(--border-width));
+  border-radius: calc(var(--origin-boder-radius) + var(--border-width));
+  border: rgba(var(--primary-rgb), 0.2) var(--border-width) solid;
+}
+
+.mc-card .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+  padding: 0.2rem 1rem;
+  font-family: "Roboto Mono", "Courier New", Courier, monospace;
+}
+
+.mc-card .nickname {
+  font-size: 2.25rem;
+  line-height: 2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+  font-family: "ConcertOne", "Concert One", cursive;
+}
+
+.mc-card .uuid {
+  font-size: 0.9rem;
+  color: var(--primary);
+  opacity: 0.8;
+}
+
+.mc-card-wrapper {
+  margin-top: 1rem;
+}
+
+.logout-btn,
+.unbind-btn {
+  font-size: 1.5rem;
+}
+
+.extra-action {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 0.5rem;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+}

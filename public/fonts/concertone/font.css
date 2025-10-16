@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "ConcertOne";
+  src: url("/public/fonts/concertone/ConcertOne-Regular.woff") format("woff"),
+    url("/public/fonts/concertone/ConcertOne-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}

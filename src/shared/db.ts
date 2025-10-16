@@ -1,12 +1,21 @@
 import { RedisClient } from 'bun'
 import { Database } from 'bun:sqlite'
 import { drizzle } from 'drizzle-orm/bun-sqlite'
+import { migrate } from 'drizzle-orm/bun-sqlite/migrator'
 import { CONFIG } from '@/config'
 import { logger } from '@/utils/consola'
 
 const dbClient = new Database(CONFIG.db.sqliteFile)
 
 export const db = drizzle({ client: dbClient, casing: 'snake_case' })
+
+export async function migrateDB() {
+  logger.start('Migrating database...')
+  await migrate(db, {
+    migrationsFolder: './drizzle/',
+  })
+  logger.success('Database migrated.')
+}
 
 export async function gracefulCloseDB() {
   logger.start('Waiting for database connection to close...')

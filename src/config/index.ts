@@ -4,9 +4,6 @@ import { FatalError } from '@/shared/error-center.interface'
 if (!process.env.MCV_SESSION_SECRET) {
   throw new FatalError('Missing MCV_SESSION_SECRET environment variable')
 }
-if (!process.env.MCV_SESSION_SALT) {
-  throw new FatalError('Missing MCV_SESSION_SALT environment variable')
-}
 if (!process.env.MCV_REDIS_URL) {
   throw new FatalError('Missing MCV_REDIS_URL environment variable')
 }
@@ -38,6 +35,7 @@ export const CONFIG = {
     host: APP_HOST,
     port: APP_PORT,
     baseUrl: APP_BASE_URL,
+    endpoint: process.env.MCV_ENDPOINT || `http://${APP_HOST}:${APP_PORT}`,
   },
   hduhelp: {
     endpoint: process.env.MCV_HDUHELP_ENDPOINT || 'https://api.hduhelp.com/',
@@ -47,7 +45,6 @@ export const CONFIG = {
   },
   session: {
     secret: process.env.MCV_SESSION_SECRET || '',
-    salt: process.env.MCV_SESSION_SALT || '',
   },
   db: {
     sqliteFile: process.env.MCV_SQLITE_FILE || 'mcverify.db',

@@ -13,33 +13,33 @@
 </head>
 
 <body>
-  {{#if isLoggedIn}}
+  <% if (isLoggedIn) { %>
   <div class='extra-action'>
     <a href='/logout' class='animate-link logout-btn'>登出</a>
-    {{#if mojangUuid}}
+    <% if (mojangUuid) { %>
     <a href='/unbind' class='animate-link unbind-btn'>解绑</a>
-    {{/if}}
+    <% } %>
   </div>
-  {{/if}}
+  <% } %>
   <div class='banner'>
     <img src='/public/images/icon256.png' alt='verify-logo' class='logo' />
     <p class='title'>MC Verify</p>
     <br />
-    {{#if isLoggedIn}}
-    <div class='user-card'>你好，<span class='hduhelp-id prompt-text' data-prompt='这是与您杭电身份相关的唯一ID'>{{hduhelpId}}</span>
+    <% if (isLoggedIn) { %>
+    <div class='user-card'>你好，<span class='hduhelp-id prompt-text' data-prompt='这是与您杭电身份相关的唯一ID'><%= hduhelpId %></span>
     </div>
-    {{#if mojangUuid}}
+    <% if (mojangUuid) { %>
     <div class='mc-card-wrapper'>
       <div class='mc-card'>
-        <div class='avatar' style='background-image:url({{mojangAvatar}})'>
+        <div class='avatar' style='background-image:url(<%= mojangAvatar %>)'>
         </div>
         <div class='right'>
-          <div class='nickname'>{{mojangName}}</div>
-          <div class='uuid'>{{mojangUuid}}</div>
+          <div class='nickname'><%= mojangName %></div>
+          <div class='uuid'><%= mojangUuid %></div>
         </div>
       </div>
     </div>
-    {{else}}
+    <% } else { %>
     <div class='prompt'>
       <div class='server'>
         mcverify.daidr.me
@@ -47,8 +47,8 @@
       <div class='text'>请进入验证服务器 根据指引完成绑定</div>
       <small>1.9-1.20.1 (不包含快照)</small>
     </div>
-    {{/if}}
-    {{else}}
+    <% } %>
+    <% } else { %>
 
     <a class='login-btn' href='/jump'>
       <svg viewBox='0 0 17 24' version='1.1' xmlns='http://www.w3.org/2000/svg'
@@ -61,17 +61,17 @@
       </svg>
       杭电助手登录
     </a>
-    {{/if}}
+    <% } %>
   </div>
 
-  {{! Footer }}
+  <!-- Footer -->
   <footer>
     <div class='copyright'>Coded by
       <a href='http://im.daidr.me' target='_blank' rel='noopener noreferrer' class='animate-link'>daidr</a>
       with ❤️
     </div>
     <div>@
-      {{CURRENT_YEAR}}
+      <%= CURRENT_YEAR %>
       ·
       <a href='/privacy' class='animate-link'>隐私政策</a>
       ·

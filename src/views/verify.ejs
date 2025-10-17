@@ -13,48 +13,48 @@
 </head>
 
 <body>
-  {{#if isLoggedIn}}
+  <% if (isLoggedIn) { %>
   <a href='/logout' class='animate-link logout-btn'>登出</a>
-  {{/if}}
+  <% } %>
 
   <div class='banner'>
     <img src='/public/images/icon256.png' alt='verify-logo' class='logo' />
     <p class='title'>MC Verify</p>
     <br />
-    {{#if error}}
+    <% if (error) { %>
     <div class='error-msg'>
-      {{msg}}
+      <%= msg %>
     </div>
-    {{else}}
-    <div class='user-card'>你好，<span class='hduhelp-id prompt-text' data-prompt='这是与您杭电身份相关的唯一ID'>{{hduhelpId}}</span>
+    <% } else { %>
+    <div class='user-card'>你好，<span class='hduhelp-id prompt-text' data-prompt='这是与您杭电身份相关的唯一ID'><%= hduhelpId %></span>
     </div>
     <div class='mc-card'>
-      <div class='avatar' style='background-image:url({{mojangAvatar}})'>
+      <div class='avatar' style='background-image:url(<%= mojangAvatar %>)'>
       </div>
       <div class='right'>
-        <div class='nickname'>{{mojangName}}</div>
-        <div class='uuid'>{{mojangUuid}}</div>
+        <div class='nickname'><%= mojangName %></div>
+        <div class='uuid'><%= mojangUuid %></div>
       </div>
     </div>
     <div class='btn-group'>
-      <a class='btn deny-btn' href='/verify/{{verifyCode}}/{{mojangUuid}}/deny'>
+      <a class='btn deny-btn' href='/verify/<%= verifyCode %>/<%= mojangUuid %>/deny'>
         拒绝绑定
       </a>
-      <a class='btn confirm-btn' href='/verify/{{verifyCode}}/{{mojangUuid}}/confirm'>
+      <a class='btn confirm-btn' href='/verify/<%= verifyCode %>/<%= mojangUuid %>/confirm'>
         确认绑定
       </a>
     </div>
-    {{/if}}
+    <% } %>
   </div>
 
-  {{! Footer }}
+  <!-- Footer -->
   <footer>
     <div class='copyright'>Coded by
       <a href='http://im.daidr.me' target='_blank' rel='noopener noreferrer' class='animate-link'>daidr</a>
       with ❤️
     </div>
     <div>@
-      {{CURRENT_YEAR}}
+      <%= CURRENT_YEAR %>
       ·
       <a href='/privacy' class='animate-link'>隐私政策</a>
       ·

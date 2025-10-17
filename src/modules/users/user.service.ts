@@ -1,6 +1,15 @@
-import { eq } from 'drizzle-orm'
-import { users } from '@/db/schema'
 import { db, redisClient } from '@/shared/db'
+
+export interface UserEntity {
+  id: number
+  hduhelpId: string
+  uuidMojang: string
+}
+
+export interface CreateUserInput {
+  hduhelpId: string
+  uuidMojang: string
+}
 
 function safeJSONParse<T>(str: string | null | undefined): T | undefined {
   if (!str) {
@@ -16,23 +25,36 @@ function safeJSONParse<T>(str: string | null | undefined): T | undefined {
 
 export abstract class UserService {
   static async findOneById(id: number) {
-    return (await db.select().from(users).where(eq(users.id, id)))[0]
+    const stmt = db.query(
+      'SELECT id, hduhelpId, uuidMojang FROM users WHERE id = $id LIMIT 1',
+    )
+    return stmt.get({ $id: id }) as UserEntity | undefined
   }
 
   static async findOneByHduhelpId(hduhelpId: string) {
-    return (await db.select().from(users).where(eq(users.hduhelpId, hduhelpId)))[0]
+    const stmt = db.query(
+      'SELECT id, hduhelpId, uuidMojang FROM users WHERE hduhelpId = $hduhelpId LIMIT 1',
+    )
+    return stmt.get({ $hduhelpId: hduhelpId }) as UserEntity | undefined
   }
 
   static async findOneByUuidMojang(uuidMojang: string) {
-    return (await db.select().from(users).where(eq(users.uuidMojang, uuidMojang)))[0]
+    const stmt = db.query(
+      'SELECT id, hduhelpId, uuidMojang FROM users WHERE uuidMojang = $uuidMojang LIMIT 1',
+    )
+    return stmt.get({ $uuidMojang: uuidMojang }) as UserEntity | undefined
   }
 
-  static async create(user: typeof users.$inferInsert) {
-    return (await db.insert(users).values(user).returning())[0]
+  static async create(user: CreateUserInput) {
+    const insert = db.query(
+      'INSERT INTO users (hduhelpId, uuidMojang) VALUES ($hduhelpId, $uuidMojang) RETURNING id, hduhelpId, uuidMojang',
+    )
+    return insert.get({ $hduhelpId: user.hduhelpId, $uuidMojang: user.uuidMojang }) as UserEntity
   }
 
   static async remove(id: number) {
-    return (await db.delete(users).where(eq(users.id, id)))
+    const del = db.query('DELETE FROM users WHERE id = $id')
+    del.run({ $id: id })
   }
 
   static async removeVerifyCodeByUuidMojang(uuidMojang: string) {

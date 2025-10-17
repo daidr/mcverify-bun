@@ -1,25 +1,15 @@
 import { RedisClient } from 'bun'
 import { Database } from 'bun:sqlite'
-import { drizzle } from 'drizzle-orm/bun-sqlite'
-import { migrate } from 'drizzle-orm/bun-sqlite/migrator'
 import { CONFIG } from '@/config'
 import { logger } from '@/utils/consola'
 
-const dbClient = new Database(CONFIG.db.sqliteFile)
+export const db = new Database(CONFIG.db.sqliteFile)
 
-export const db = drizzle({ client: dbClient, casing: 'snake_case' })
-
-export async function migrateDB() {
-  logger.start('Migrating database...')
-  await migrate(db, {
-    migrationsFolder: './drizzle/',
-  })
-  logger.success('Database migrated.')
-}
+db.run('PRAGMA journal_mode = WAL;')
 
 export async function gracefulCloseDB() {
   logger.start('Waiting for database connection to close...')
-  await dbClient.close()
+  db.close()
   logger.success('Database connection closed.')
 }
 
@@ -35,4 +25,34 @@ export function buildRedisKey(...args: string[]) {
   const globalScope = CONFIG.db.redisScope
   const key = args.join(':')
   return `${globalScope}:${key}`
+}
+
+export async function migrateDB() {
+  logger.start('Running SQLite migration...')
+
+  const existsRow = db
+    .query('SELECT COUNT(1) AS cnt FROM sqlite_master WHERE type=\'table\' AND name=\'users\'')
+    .get() as { cnt: number } | undefined
+
+  const hasUsersTable = !!existsRow && Number(existsRow.cnt) > 0
+
+  if (!hasUsersTable) {
+    db.run(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        hduhelpId TEXT NOT NULL,
+        uuidMojang TEXT NOT NULL
+      );
+    `)
+    logger.info('Created table: users')
+  }
+  else {
+    logger.info('Table exists: users')
+  }
+
+  db.run('CREATE INDEX IF NOT EXISTS idx_users_id ON users(id);')
+  db.run('CREATE UNIQUE INDEX IF NOT EXISTS idx_users_hduhelp_id ON users(hduhelpId);')
+  db.run('CREATE UNIQUE INDEX IF NOT EXISTS idx_users_uuid_mojang ON users(uuidMojang);')
+
+  logger.success('SQLite migration completed.')
 }

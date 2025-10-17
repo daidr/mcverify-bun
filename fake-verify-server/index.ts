@@ -4,7 +4,7 @@ import { heapStats } from 'bun:jsc'
 import { createServer } from 'minecraft-protocol'
 import prettyBytes from 'pretty-bytes'
 import nbt from 'prismarine-nbt'
-import loginTags from './loginTags.json' with { type: 'json' }
+// import loginTags from './loginTags.json' with { type: 'json' }
 import {
   sendBossbarPacket,
   sendUniformChatPacket,
@@ -93,7 +93,6 @@ export function run(getVerifyStatus: getVerifyStatusFn) {
       response.players.online = 0
       response.players.sample = processInfo.pingPacket
       response.description.text = '§6§lMC §2§lVerify' + '\n'
-      console.log('protocolVersion', client.protocolVersion)
 
       // 不可使用新快照
       if (client.protocolVersion >= 1000000) {
@@ -107,12 +106,11 @@ export function run(getVerifyStatus: getVerifyStatusFn) {
         return
       }
 
-      // 不可使用高于 (760)1.19.2 的版本
-      // if (client.protocolVersion > 760) {
-      //   response.description.text +=
-      //     '§c§l抱歉，暂时不支持使用高于 1.19.2 版本的MC。';
-      //   return;
-      // }
+      // 不可使用高于 (763)1.20.1 的版本
+      if (client.protocolVersion > 763) {
+        response.description.text += '§c§l抱歉，暂时不支持使用高于 1.20.1 版本的MC。'
+        return
+      }
 
       response.description.text
         += `§e§l当前时间： §b${new Date().toLocaleString('zh')}`
@@ -126,71 +124,75 @@ export function run(getVerifyStatus: getVerifyStatusFn) {
         // 如果低于 (107)1.9 版本，直接踢出
         client.end('§c§l抱歉，不支持使用低于 1.9 版本的MC。')
       }
+      else if (client.protocolVersion > 763) {
+        // 如果高于 (763)1.20.1 版本，直接踢出
+        client.end('§c§l抱歉，暂时不支持使用高于 1.20.1 版本的MC。')
+      }
     },
   })
 
-  server.on('connection', (client) => {
-    client.on('state', (now) => {
-      if (now === 'configuration') {
-        client.write('feature_flags', { features: ['minecraft:vanilla'] })
-        client.write('tags', loginTags)
-        // client.write('tags', {
-        //   tags: [
-        //     {
-        //       tagType: 'minecraft:worldgen/biome',
-        //       tags: [
-        //         {
-        //           tagName: 'minecraft:is_badlands',
-        //           entries: [],
-        //         },
-        //         {
-        //           tagName: 'minecraft:is_jungle',
-        //           entries: [],
-        //         },
-        //         {
-        //           tagName: 'minecraft:is_savanna',
-        //           entries: [],
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       tagType: 'minecraft:enchantment',
-        //       tags: [
-        //         {
-        //           tagName: 'minecraft:exclusive_set/bow',
-        //           entries: [],
-        //         },
-        //         {
-        //           tagName: 'minecraft:exclusive_set/riptide',
-        //           entries: [],
-        //         },
-        //         {
-        //           tagName: 'minecraft:exclusive_set/damage',
-        //           entries: [],
-        //         },
-        //         {
-        //           tagName: 'minecraft:exclusive_set/crossbow',
-        //           entries: [],
-        //         },
-        //         {
-        //           tagName: 'minecraft:exclusive_set/armor',
-        //           entries: [],
-        //         },
-        //         {
-        //           tagName: 'minecraft:exclusive_set/boots',
-        //           entries: [],
-        //         },
-        //         {
-        //           tagName: 'minecraft:exclusive_set/mining',
-        //           entries: [],
-        //         },
-        //       ],
-        //     },
-        //   ],
-        // })
-      }
-    })
-  })
+  // server.on('connection', (client) => {
+  //   client.on('state', (now) => {
+  //     if (now === 'configuration') {
+  //       client.write('feature_flags', { features: ['minecraft:vanilla'] })
+  //       client.write('tags', loginTags)
+  //       // client.write('tags', {
+  //       //   tags: [
+  //       //     {
+  //       //       tagType: 'minecraft:worldgen/biome',
+  //       //       tags: [
+  //       //         {
+  //       //           tagName: 'minecraft:is_badlands',
+  //       //           entries: [],
+  //       //         },
+  //       //         {
+  //       //           tagName: 'minecraft:is_jungle',
+  //       //           entries: [],
+  //       //         },
+  //       //         {
+  //       //           tagName: 'minecraft:is_savanna',
+  //       //           entries: [],
+  //       //         },
+  //       //       ],
+  //       //     },
+  //       //     {
+  //       //       tagType: 'minecraft:enchantment',
+  //       //       tags: [
+  //       //         {
+  //       //           tagName: 'minecraft:exclusive_set/bow',
+  //       //           entries: [],
+  //       //         },
+  //       //         {
+  //       //           tagName: 'minecraft:exclusive_set/riptide',
+  //       //           entries: [],
+  //       //         },
+  //       //         {
+  //       //           tagName: 'minecraft:exclusive_set/damage',
+  //       //           entries: [],
+  //       //         },
+  //       //         {
+  //       //           tagName: 'minecraft:exclusive_set/crossbow',
+  //       //           entries: [],
+  //       //         },
+  //       //         {
+  //       //           tagName: 'minecraft:exclusive_set/armor',
+  //       //           entries: [],
+  //       //         },
+  //       //         {
+  //       //           tagName: 'minecraft:exclusive_set/boots',
+  //       //           entries: [],
+  //       //         },
+  //       //         {
+  //       //           tagName: 'minecraft:exclusive_set/mining',
+  //       //           entries: [],
+  //       //         },
+  //       //       ],
+  //       //     },
+  //       //   ],
+  //       // })
+  //     }
+  //   })
+  // })
 
   server.on('playerJoin', async (client) => {
     const mcData = getMcDataByVersion(client.protocolVersion)
@@ -263,10 +265,10 @@ export function run(getVerifyStatus: getVerifyStatusFn) {
     sendUniformChatPacket(client, !nbtMessageEnabled
       ? JSON.stringify({
           translate: 'chat.type.announcement',
-          with: ['§6§lMC §2§lVerify', '§r' + '你正在通过MC Verify验证杭电学生身份。'],
+          with: ['§6§lMC §2§lVerify', `§r你好，§e${client.username}§r，你正在通过MC Verify验证杭电学生身份。`],
         })
       : nbt.comp({
-          text: nbt.string('§6§lMC §2§lVerify §r你正在通过MC Verify验证杭电学生身份。'),
+          text: nbt.string(`§6§lMC §2§lVerify §r你好，§e${client.username}§r，你正在通过MC Verify验证杭电学生身份。`),
         }))
 
     sendUniformChatPacket(client, !nbtMessageEnabled
@@ -281,45 +283,41 @@ export function run(getVerifyStatus: getVerifyStatusFn) {
           text: nbt.string('§6§lMC §2§lVerify §r倘若您不知道这是什么，请立即断开连接。'),
         }))
 
-    sendUniformChatPacket(client, !nbtMessageEnabled
-      ? JSON.stringify({
-          translate: 'chat.type.announcement',
-          with: [
-            '§6§lMC §2§lVerify',
-            [
-              {
-                text: '按下「',
-              },
-              {
-                keybind: 'key.chat',
-              },
-              {
-                text: '」打开聊天框呼出鼠标后',
-              },
-            ],
-          ],
-        })
-      : nbt.comp({
-          text: nbt.string('§6§lMC §2§lVerify §r按下「'),
-        }))
-    // sendUniformChatPacket(client, {
-    //   translate: 'chat.type.announcement',
-    //   with: [
-    //     '§6§lMC §2§lVerify',
-    //     [
-    //       {
-    //         text: '点击链接完成绑定 → ',
-    //       },
-    //       {
-    //         text: '§a§l§n绑定',
-    //         clickEvent: {
-    //           action: 'open_url',
-    //           value: `${apiEndpoint}/verify/${verifyCode}/${client.uuid}`,
-    //         },
-    //       },
-    //     ],
-    //   ],
-    // })
+    sendUniformChatPacket(client, JSON.stringify({
+      translate: 'chat.type.announcement',
+      with: [
+        '§6§lMC §2§lVerify',
+        [
+          {
+            text: '按下「',
+          },
+          {
+            keybind: 'key.chat',
+          },
+          {
+            text: '」打开聊天框呼出鼠标后',
+          },
+        ],
+      ],
+    }))
+    sendUniformChatPacket(client, JSON.stringify({
+      translate: 'chat.type.announcement',
+      with: [
+        '§6§lMC §2§lVerify',
+        [
+          {
+            text: '点击链接完成绑定 → ',
+          },
+          {
+            text: '§a§l§n绑定',
+            clickEvent: {
+              action: 'open_url',
+              value: `${apiEndpoint}/verify/${verifyCode}/${client.uuid}`,
+            },
+          },
+        ],
+      ],
+    }))
 
     const getColoredTime = (text: string, progress: number) => {
       // 70% 以上为绿色，30% 以上为黄色，其余为红色
